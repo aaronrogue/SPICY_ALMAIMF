@@ -8,6 +8,8 @@ import sedfitter
 from sedfitter.sed import SEDCube
 from astropy.table import Table
 
+import matplotlib.image as mpimg
+
 import table_loading
 
 def datafunction(geom, deltachi2lim, bestfits):
