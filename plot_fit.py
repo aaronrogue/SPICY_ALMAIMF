@@ -8,6 +8,8 @@ import sedfitter
 from sedfitter.sed import SEDCube
 from astropy.table import Table
 
+import matplotlib.image as mpimg
+
 import table_loading
 
 def datafunction(geom, deltachi2lim, bestfits):
@@ -69,7 +71,7 @@ def binsfunction(param, kind, binsnum, deltachi2lim, geometries, bestfits, massn
     return bins
 
 def plot_fit(bestfits_source, geometries_selection, deltachi2limit, fieldid,
-             spicyid, figurepath=os.path.expanduser('~/figures'),
+             spicyid, modelcount, figurepath=os.path.expanduser('~/figures'),
              extinction=table_loading.make_extinction(),
              show_per_aperture=True, default_aperture=3*u.arcsec,
              robitaille_modeldir='/blue/adamginsburg/richardson.t/research/flux/robitaille_models/',
@@ -85,6 +87,8 @@ def plot_fit(bestfits_source, geometries_selection, deltachi2limit, fieldid,
          31415 (ex. - whatever source you're looking at)
     name : string
          'btingle' (ex. - however your name appears in your directory, aka /home/yourname)
+    modelcount : number
+         2300 (ex. - the number of models included across all geometries)
     """
     # Setting up the plot surface
     basefig = plt.figure(figsize=(20, 22))
@@ -264,7 +268,7 @@ def plot_fit(bestfits_source, geometries_selection, deltachi2limit, fieldid,
 
         ax9 = basefig.add_subplot(gs[0, 0])
         ax9.imshow(locfig)
-        ttl = ax9.set_title(f'\n{fieldid}  |  SPICY {spicyid}\n', fontsize=25)
+        ttl = ax9.set_title(f'\n{fieldid}  |  SPICY {spicyid} | {modelcount} models\n', fontsize=25)
         ttl.set_position([.5, 1])
         #ax9.axis([90,630,90,630])
         ax9.axis([170,550,170,550])
@@ -272,3 +276,4 @@ def plot_fit(bestfits_source, geometries_selection, deltachi2limit, fieldid,
     elif verbose:
         print(f"Figure {figpath} doesn't exist")
 
+        return basefig
